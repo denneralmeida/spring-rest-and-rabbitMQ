@@ -30,7 +30,7 @@ public class Pedido implements Serializable {
     @Min(value = 0)
     @Digits(fraction = 2, integer = 10)
     @Column(columnDefinition = "DECIMAL(10,2) DEFAULT 0", nullable = false)
-    private float valorTotal;
+    private double valorTotal;
 
 
     @OneToOne(targetEntity = Endereco.class)

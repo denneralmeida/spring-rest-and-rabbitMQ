@@ -1,15 +1,12 @@
 package br.com.xbrain.projeto.model;
 
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "produto", uniqueConstraints = @UniqueConstraint(name = "uc_produto", columnNames = "descricao"))

@@ -1,12 +1,14 @@
 package br.com.xbrain.projeto.controller;
 
 import br.com.xbrain.projeto.model.Produto;
+import br.com.xbrain.projeto.service.amqp.AmqpTemplate;
 import br.com.xbrain.projeto.service.interfaces.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @CrossOrigin
@@ -16,6 +18,9 @@ public class ProdutoController {
 
     @Autowired
     private ProdutoService produtoService;
+
+    @Autowired
+    private AmqpTemplate template;
 
     @GetMapping
     public List<Produto> produtos() {
@@ -43,5 +48,10 @@ public class ProdutoController {
     @ResponseStatus(HttpStatus.OK)
     public void excluir(@PathVariable Integer id) {
         produtoService.excluir(id);
+    }
+
+    @GetMapping("/send")
+    public void send(@PathParam(value = "msg") String msg){
+        template.produceMessage(msg);
     }
 }
