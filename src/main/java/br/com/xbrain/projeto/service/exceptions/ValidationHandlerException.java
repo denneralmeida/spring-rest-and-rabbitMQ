@@ -1,5 +1,7 @@
 package br.com.xbrain.projeto.service.exceptions;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +52,5 @@ public class ValidationHandlerException extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(
                 body, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
-
 
 }

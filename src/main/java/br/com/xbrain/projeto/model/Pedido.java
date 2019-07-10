@@ -33,7 +33,7 @@ public class Pedido implements Serializable {
     private double valorTotal;
 
 
-    @OneToOne(targetEntity = Endereco.class)
+    @ManyToOne(targetEntity = Endereco.class)
     @JoinColumn(name = "endereco", foreignKey = @ForeignKey(name = "fk_pedido_endereco"))
     private Endereco enderecoEntrega;
 

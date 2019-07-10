@@ -9,16 +9,10 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class TesteApplication {
 
-    @Value("${queue.order.name}")
-    private String pedidosFila;
 
     public static void main(String[] args) {
         SpringApplication.run(TesteApplication.class, args);
     }
 
-    @Bean
-    public Queue queue() {
-        return new Queue(pedidosFila, true);
-    }
 
 }

@@ -2,11 +2,10 @@ package br.com.xbrain.projeto.service.implementations;
 
 import br.com.xbrain.projeto.model.Pedido;
 import br.com.xbrain.projeto.repository.PedidoRepository;
+import br.com.xbrain.projeto.service.amqp.AmqpTemplate;
 import br.com.xbrain.projeto.service.exceptions.DuplicateException;
 import br.com.xbrain.projeto.service.exceptions.NotFoundException;
 import br.com.xbrain.projeto.service.interfaces.PedidoService;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +18,9 @@ public class PedidoServiceImpl implements PedidoService {
     @Autowired
     private PedidoRepository pedidoRepository;
 
+
     @Autowired
-    private Queue pedidos;
+    private AmqpTemplate template;
 
     @Override
     public Pedido salvar(Pedido pedido) throws DuplicateException {
@@ -46,8 +46,15 @@ public class PedidoServiceImpl implements PedidoService {
         Pedido pedidoAux = pedidoRepository.save(pedido);
 
         pedidoAux.setValorTotal(pedidoAux.getProdutos().stream().mapToDouble(x -> x.getValor()).sum());
-        if (pedidoAux.getEnderecoEntrega() == null) pedidoAux.setEnderecoEntrega(pedidoAux.getCliente().getEndereco()); //se não for informado o endereço, o sistema atribui o endereço do cliente
+        if (pedidoAux.getEnderecoEntrega() == null)
+            pedidoAux.setEnderecoEntrega(pedidoAux.getCliente().getEndereco()); //se não for informado o endereço, o sistema atribui o endereço do cliente
 
-        return pedidoRepository.save(pedidoAux);
+        Pedido pedidoSalvo = pedidoRepository.save(pedidoAux);
+
+        if (pedidoSalvo != null) {
+            template.produceMessage(pedido);
+        }
+
+        return pedidoSalvo;
     }
 }

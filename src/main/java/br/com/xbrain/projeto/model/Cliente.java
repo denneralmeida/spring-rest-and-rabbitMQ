@@ -29,10 +29,12 @@ public class Cliente implements Serializable {
 
     @Email(message = "Insira um e-mail válido.")
     @Column(nullable = false, length = 60)
+    @NotBlank(message = "Preencha o e-mail")
     private String email;
 
     @CPF(message = "Insira um CPF válido.")
     @Column(length = 14, nullable = false)
+    @NotBlank(message = "Preencha o cpf")
     private String cpf;
 
     @Valid

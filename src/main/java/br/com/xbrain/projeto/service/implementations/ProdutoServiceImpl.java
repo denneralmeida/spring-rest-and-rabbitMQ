@@ -6,12 +6,10 @@ import br.com.xbrain.projeto.service.exceptions.DuplicateException;
 import br.com.xbrain.projeto.service.exceptions.NotFoundException;
 import br.com.xbrain.projeto.service.interfaces.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.ValidationException;
 import java.util.List;
 
 @Service

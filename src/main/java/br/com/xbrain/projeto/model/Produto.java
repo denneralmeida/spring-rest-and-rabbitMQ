@@ -7,6 +7,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "produto", uniqueConstraints = @UniqueConstraint(name = "uc_produto", columnNames = "descricao"))

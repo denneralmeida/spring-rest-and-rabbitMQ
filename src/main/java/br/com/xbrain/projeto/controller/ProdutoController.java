@@ -19,8 +19,6 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
-    @Autowired
-    private AmqpTemplate template;
 
     @GetMapping
     public List<Produto> produtos() {
@@ -50,8 +48,4 @@ public class ProdutoController {
         produtoService.excluir(id);
     }
 
-    @GetMapping("/send")
-    public void send(@PathParam(value = "msg") String msg){
-        template.produceMessage(msg);
-    }
 }

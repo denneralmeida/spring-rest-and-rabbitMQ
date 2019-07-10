@@ -4,7 +4,12 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Component
 public class AmqpTemplate {
@@ -12,17 +17,16 @@ public class AmqpTemplate {
     @Autowired
     private RabbitTemplate template;
 
-    @Value("${queue.order.name}")
+    @Value("${queue.name}")
     private String orderName;
 
-    public void produceMessage(String msg) {
+    public void produceMessage(Object msg) {
         template.convertAndSend(orderName, msg);
-        System.out.println("Enviado..." + msg);
     }
 
-
+    @Bean
     Queue queue() {
-        return new Queue(orderName, false);
+        return new Queue(orderName, true);
     }
 }
 
